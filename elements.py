@@ -1,7 +1,7 @@
 import pygame
 
 
-def squares(x_position, y_position, block_numbers_x, block_numbers_y, screen, color):
+def squares(x_position, y_position, color, screen, block_numbers_x=0, block_numbers_y=0):
     y_times = 0
     # Increace every 14 pixels in the y-axis.
     y_posi = y_position + block_numbers_y * 14

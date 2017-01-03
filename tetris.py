@@ -17,19 +17,19 @@ def main():
                 sys.exit()
 
         # draw walls.
-        block_numbers_y = 0
-        while block_numbers_y < 20:
-            elements.squares(0, 0, 0, block_numbers_y, screen, white)  # left
-            elements.squares(154, 0, 0, block_numbers_y, screen, white)  # right
+        vertical_numbers = 0
+        while vertical_numbers < 20:
+            elements.squares(0, 0, white, screen, block_numbers_y=vertical_numbers)  # left
+            elements.squares(154, 0, white, screen, block_numbers_y=vertical_numbers)  # right
 
-            block_numbers_y = block_numbers_y + 1
+            vertical_numbers = vertical_numbers + 1
 
-        # draw the bottom.
-        block_numbers_x = 0
-        while block_numbers_x < 10:
-            elements.squares(14, 266, block_numbers_x, 0, screen, white)  # bottom
+        # draw bottom.
+        horizontal_numbers = 0
+        while horizontal_numbers < 10:
+            elements.squares(14, 266, white, screen, block_numbers_x=horizontal_numbers)
 
-            block_numbers_x = block_numbers_x + 1
+            horizontal_numbers = horizontal_numbers + 1
 
 
 if __name__ == '__main__':
