@@ -9,6 +9,8 @@ def main():
     screen = pygame.display.set_mode((280, 280))
     pygame.display.set_caption("Tetris")
     white = (255, 255, 255)
+    black = (0, 0, 0)
+    red = (255, 0, 0)
 
     while True:
         for event in pygame.event.get():
@@ -30,6 +32,17 @@ def main():
             elements.squares(1, 19, screen, white, horizontal_blocks=horizontal_blocks)
 
             horizontal_blocks = horizontal_blocks + 1
+
+        pygame.display.update()
+
+        # drop a square.
+        t = 0
+        while t < 20:
+            y = t + 1
+            elements.squares(5, y, screen, red)
+            pygame.display.update()
+            elements.squares(5, y, screen, black)
+            t = t + 1
 
 
 if __name__ == '__main__':

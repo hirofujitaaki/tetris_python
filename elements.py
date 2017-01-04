@@ -12,7 +12,6 @@ def squares(x_block_number, y_block_number, screen, color, horizontal_blocks=0, 
         x_blk_num = x_block_num
         while x_times < 12:
             pygame.draw.rect(screen, color, (x_blk_num, y_block_num, 1, 1))
-            pygame.display.update()
             x_blk_num = x_blk_num + 1
             x_times = x_times + 1
         y_block_num = y_block_num + 1
