@@ -11,18 +11,28 @@ def main():
     white = (255, 255, 255)
     black = (0, 0, 0)
 
+    x = 10
+    y = 1
     while True:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit()
 
-            elif event.type == pygame.KEYDOWN:
+            elements.squares(x, y, screen, white)
+            pygame.display.update()
+            if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_RIGHT:
-                    elements.squares(1, 1, screen, white)
-                    pygame.display.update()
+                    elements.squares(x, y, screen, black)
+                    x += 1
 
-            screen.fill(black)
+                if event.key == pygame.K_LEFT:
+                    elements.squares(x, y, screen, black)
+                    x += -1
+
+                if event.key == pygame.K_DOWN:
+                    elements.squares(x, y, screen, black)
+                    y += 1
 
 
 if __name__ == '__main__':

@@ -1,14 +1,15 @@
 import sys
 import pygame
-import elements
+from blocks import Blocks
 from settings import Settings
 
 
 def main():
     # Initialize the game and create a screen object.
     pygame.init()
-    settings = Settings()
-    screen = pygame.display.set_mode((settings.screen_width, settings.screen_height))
+    screen = pygame.display.set_mode((280, 280))
+    settings = Settings(screen)
+    blocks = Blocks(screen)
     pygame.display.set_caption("Tetris")
 
     while True:
@@ -18,19 +19,9 @@ def main():
                 sys.exit()
 
         # draw walls.
-        vertical_blocks = 0
-        while vertical_blocks < 20:
-            elements.squares(0, 0, screen, settings.white, vertical_blocks=vertical_blocks)  # left
-            elements.squares(11, 0, screen, settings.white, vertical_blocks=vertical_blocks)  # right
-
-            vertical_blocks = vertical_blocks + 1
-
+        settings.draw_walls(blocks)
         # draw bottom.
-        horizontal_blocks = 0
-        while horizontal_blocks < 10:
-            elements.squares(1, 19, screen, settings.white, horizontal_blocks=horizontal_blocks)
-
-            horizontal_blocks = horizontal_blocks + 1
+        settings.draw_bottom(blocks)
 
         pygame.display.update()
 
@@ -38,9 +29,9 @@ def main():
         t = 0
         while t < 20:
             y = t + 1
-            elements.squares(5, y, screen, settings.red)
+            blocks.squares(5, y, settings.red)
             pygame.display.update()
-            elements.squares(5, y, screen, settings.black)
+            blocks.squares(5, y, settings.black)
             t = t + 1
 
 
