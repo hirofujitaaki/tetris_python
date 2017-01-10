@@ -31,11 +31,11 @@ def main():
                 sys.exit()
 
             elif event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_RIGHT and x < 10:
+                if event.key == pygame.K_RIGHT:
                     block.squares(x, y, settings.black)
                     x += 1
 
-                elif event.key == pygame.K_LEFT and x > 1:
+                elif event.key == pygame.K_LEFT:
                     block.squares(x, y, settings.black)
                     x += -1
 
@@ -44,7 +44,7 @@ def main():
 
         # adjust the speed of falling blocks.
         t += 1
-        if t % 10 == 0 and y < 18:
+        if t % 10 == 0:
             y += 1
 
 
