@@ -40,15 +40,6 @@ def main():
         block.squares(x, y, settings.black)
         y += 1
 
-        # # drop a square.
-        # t = 0
-        # while t < 20:
-        #     y = t + 1
-        #     block.squares(5, y, settings.red)
-        #     pygame.display.update()
-        #     block.squares(5, y, settings.black)
-        #     t = t + 1
-
 
 if __name__ == '__main__':
     main()

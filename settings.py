@@ -11,14 +11,14 @@ class Settings():
     def draw_walls(self, blocks):
         vertical_blocks = 0
         while vertical_blocks < 20:
-            blocks.squares(0, 0, self.white, vertical_blocks=vertical_blocks)  # left
-            blocks.squares(11, 0, self.white, vertical_blocks=vertical_blocks)  # right
+            blocks.squares(0, 0, self.white, y_recurring=vertical_blocks)  # left
+            blocks.squares(11, 0, self.white, y_recurring=vertical_blocks)  # right
 
             vertical_blocks = vertical_blocks + 1
 
     def draw_bottom(self, blocks):
         horizontal_blocks = 0
         while horizontal_blocks < 10:
-            blocks.squares(1, 19, self.white, horizontal_blocks=horizontal_blocks)
+            blocks.squares(1, 19, self.white, x_recurring=horizontal_blocks)
 
             horizontal_blocks = horizontal_blocks + 1
