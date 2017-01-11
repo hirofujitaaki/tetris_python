@@ -8,10 +8,11 @@ def main():
     # Initialize the game and create a screen object.
     pygame.init()
     screen = pygame.display.set_mode((280, 280))
-    settings = Settings(screen)
-    block = Block(screen)
     pygame.display.set_caption("Tetris")
 
+    macro = {}
+    block = Block(screen, macro)
+    settings = Settings(screen)
     x = 5
     y = 1
     t = 0
@@ -32,12 +33,14 @@ def main():
 
             elif event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_RIGHT:
-                    block.squares(x, y, settings.black)
-                    x += 1
+                    if block.check_macro(x+1, y) is False:
+                        block.squares(x, y, settings.black)
+                        x += 1
 
                 elif event.key == pygame.K_LEFT:
-                    block.squares(x, y, settings.black)
-                    x += -1
+                    if block.check_macro(x-1, y) is False:
+                        block.squares(x, y, settings.black)
+                        x += -1
 
         # paint it back to black.
         block.squares(x, y, settings.black)
@@ -45,7 +48,13 @@ def main():
         # adjust the speed of falling blocks.
         t += 1
         if t % 10 == 0:
-            y += 1
+            if block.check_macro(x, y+1) is True:
+                block.fill_macro(x, y)
+                block.squares(x, y, settings.white)
+                x = 5
+                y = 1
+            else:
+                y += 1
 
 
 if __name__ == '__main__':

@@ -8,17 +8,24 @@ class Settings():
         self.black = (0, 0, 0)
         self.red = (255, 0, 0)
 
-    def draw_walls(self, blocks):
+    def draw_walls(self, block):
         vertical_blocks = 0
         while vertical_blocks < 20:
-            blocks.squares(0, 0, self.white, y_recurring=vertical_blocks)  # left
-            blocks.squares(11, 0, self.white, y_recurring=vertical_blocks)  # right
+            block.squares(0, 0, self.white, y_recurring=vertical_blocks)  # left
+            block.squares(11, 0, self.white, y_recurring=vertical_blocks)  # right
+
+            # set the macro True.
+            block.fill_macro(0, vertical_blocks)
+            block.fill_macro(11, vertical_blocks)
 
             vertical_blocks = vertical_blocks + 1
 
-    def draw_bottom(self, blocks):
+    def draw_bottom(self, block):
         horizontal_blocks = 0
         while horizontal_blocks < 10:
-            blocks.squares(1, 19, self.white, x_recurring=horizontal_blocks)
+            block.squares(1, 19, self.white, x_recurring=horizontal_blocks)
+
+            # set the macro True.
+            block.fill_macro(horizontal_blocks+1, 19)
 
             horizontal_blocks = horizontal_blocks + 1
