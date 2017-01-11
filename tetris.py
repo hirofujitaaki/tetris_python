@@ -56,6 +56,8 @@ def main():
             else:
                 y += 1
 
+        block.remove(settings.black)
+
 
 if __name__ == '__main__':
     main()

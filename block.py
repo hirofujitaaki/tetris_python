@@ -24,3 +24,22 @@ class Block():
             return self.macro[(x, y)]
         except KeyError:
             return False
+
+    def remove(self, color):
+        if self._is_removeable():
+            x = 1
+            while x < 11:
+                self.squares(x, 18, color)  # paint back to black.
+                self._clear_macro(x, 18)
+                x += 1
+
+    def _is_removeable(self):
+        x = 1
+        removeable = True
+        while x < 11:
+            removeable = removeable and self.check_macro(x, 18)
+            x += 1
+        return removeable
+
+    def _clear_macro(self, x, y):
+        self.macro[(x, y)] = False
