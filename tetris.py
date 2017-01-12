@@ -10,7 +10,7 @@ def main():
     screen = pygame.display.set_mode((280, 280))
     pygame.display.set_caption("Tetris")
 
-    macro = {}
+    macro = {}  # to check collisions.
     block = Block(screen, macro)
     settings = Settings(screen)
     x = 5
@@ -22,8 +22,8 @@ def main():
         # draw bottom.
         settings.draw_bottom(block)
 
-        # paint it red.
-        block.squares(x, y, settings.red)
+        # draw the active block in red.
+        block.square(x, y, settings.red)
         pygame.display.update()
 
         for event in pygame.event.get():
@@ -34,29 +34,30 @@ def main():
             elif event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_RIGHT:
                     if block.check_macro(x+1, y) is False:
-                        block.squares(x, y, settings.black)
+                        block.square(x, y, settings.black)
                         x += 1
 
                 elif event.key == pygame.K_LEFT:
                     if block.check_macro(x-1, y) is False:
-                        block.squares(x, y, settings.black)
+                        block.square(x, y, settings.black)
                         x += -1
 
         # paint it back to black.
-        block.squares(x, y, settings.black)
+        block.square(x, y, settings.black)
 
         # adjust the speed of falling blocks.
         t += 1
         if t % 10 == 0:
+            # check collisions.
             if block.check_macro(x, y+1) is True:
                 block.fill_macro(x, y)
-                block.squares(x, y, settings.white)
+                block.square(x, y, settings.white)
+                block.remove(y, settings.black)
                 x = 5
                 y = 1
             else:
+                # keep falling down if no collisions.
                 y += 1
-
-        block.remove(settings.black)
 
 
 if __name__ == '__main__':

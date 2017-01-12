@@ -7,14 +7,10 @@ class Block():
         self.screen = screen
         self.macro = macro
 
-    def squares(self, x_base_position, y_base_position, color, x_recurring=0, y_recurring=0):
-        """draw a square for recurring times."""
-        # Increase every 14 pixels in the y-axis.
-        y_starting_posi = y_base_position * 14 + y_recurring * 14
-        # Increase every 14 pixels in the x-axis.
-        x_starting_posi = x_base_position * 14 + x_recurring * 14
-        pygame.draw.rect(self.screen, color, (x_starting_posi, y_starting_posi, 12, 12))
-        # self.fill_macro(x_starting_posi, y_starting_posi)
+    def square(self, x_position, y_position, color):
+        x_starting_pixel = x_position * 14
+        y_starting_pixel = y_position * 14
+        pygame.draw.rect(self.screen, color, (x_starting_pixel, y_starting_pixel, 12, 12))
 
     def fill_macro(self, x, y):
         self.macro[(x, y)] = True
@@ -25,19 +21,19 @@ class Block():
         except KeyError:
             return False
 
-    def remove(self, color):
-        if self._is_removeable():
+    def remove(self, y, color):
+        if self._is_removeable(y):
             x = 1
             while x < 11:
-                self.squares(x, 18, color)  # paint back to black.
-                self._clear_macro(x, 18)
+                self.square(x, y, color)  # back to black.
+                self._clear_macro(x, y)
                 x += 1
 
-    def _is_removeable(self):
+    def _is_removeable(self, y):
         x = 1
         removeable = True
         while x < 11:
-            removeable = removeable and self.check_macro(x, 18)
+            removeable = removeable and self.check_macro(x, y)
             x += 1
         return removeable
 

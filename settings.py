@@ -2,7 +2,6 @@ class Settings():
     """A class to store all settings for Tetris."""
 
     def __init__(self,  screen):
-        # Screen settings.
         self.screen = screen
         self.white = (255, 255, 255)
         self.black = (0, 0, 0)
@@ -11,21 +10,19 @@ class Settings():
     def draw_walls(self, block):
         vertical_blocks = 0
         while vertical_blocks < 20:
-            block.squares(0, 0, self.white, y_recurring=vertical_blocks)  # left
-            block.squares(11, 0, self.white, y_recurring=vertical_blocks)  # right
+            block.square(0, vertical_blocks, self.white)  # left
+            block.square(11, vertical_blocks, self.white)  # right
 
-            # set the macro True.
-            block.fill_macro(0, vertical_blocks)
-            block.fill_macro(11, vertical_blocks)
+            block.fill_macro(0, vertical_blocks)  # set macro True.
+            block.fill_macro(11, vertical_blocks)  # same as above.
 
             vertical_blocks = vertical_blocks + 1
 
     def draw_bottom(self, block):
-        horizontal_blocks = 0
-        while horizontal_blocks < 10:
-            block.squares(1, 19, self.white, x_recurring=horizontal_blocks)
+        horizontal_blocks = 1
+        while horizontal_blocks < 11:
+            block.square(horizontal_blocks, 19, self.white)
 
-            # set the macro True.
-            block.fill_macro(horizontal_blocks+1, 19)
+            block.fill_macro(horizontal_blocks, 19)  # set macro True.
 
             horizontal_blocks = horizontal_blocks + 1
