@@ -17,7 +17,7 @@ def main():
     x = 5
     y = 1
     t = 0
-    test_setup.slide(block, settings)
+    test_setup.slide(block, settings)  # for testing purpose.
     while True:
         # draw walls.
         settings.draw_walls(block)
@@ -52,10 +52,11 @@ def main():
         if t % 10 == 0:
             # check collisions.
             if block.check_macro(x, y+1) is True:
-                block.fill_macro(x, y)
                 block.square(x, y, settings.white)
+                block.fill_macro(x, y)
                 if block.is_removeable(y):
                     block.remove(y, settings.black)
+                    block.slide(y, settings.white, settings.black)
                 x = 5
                 y = 1
             else:

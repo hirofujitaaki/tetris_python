@@ -7,9 +7,9 @@ class Block():
         self.screen = screen
         self.macro = macro
 
-    def square(self, x_position, y_position, color):
-        x_starting_pixel = x_position * 14
-        y_starting_pixel = y_position * 14
+    def square(self, x, y, color):  # red, white, or black.
+        x_starting_pixel = x * 14
+        y_starting_pixel = y * 14
         pygame.draw.rect(self.screen, color, (x_starting_pixel, y_starting_pixel, 12, 12))
 
     def fill_macro(self, x, y):
@@ -21,11 +21,25 @@ class Block():
         except KeyError:
             return False
 
+    def slide(self, y, color_w, color_b):
+        y = y - 1
+        while y >= 0:
+            x = 1
+            while x <= 10:
+                if self.check_macro(x, y):
+                    self.square(x, y, color_b)
+                    self._clear_macro(x, y)
+                    self.square(x, y+1, color_w)
+                    self.fill_macro(x, y+1)
+                x += 1
+            y -= 1
+
     def remove(self, y, color):
+        """ remove squares in a raw and set the macro False. """
         x = 1
         while x < 11:
-            self.square(x, y, color)  # back to black.
-            self._clear_macro(x, y)
+            self.square(x, y, color)  # black only, that's why
+            self._clear_macro(x, y)   # it can include this line.
             x += 1
 
     def is_removeable(self, y):
