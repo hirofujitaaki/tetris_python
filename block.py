@@ -21,7 +21,8 @@ class Block():
         except KeyError:
             return False
 
-    def slide(self, y, color_w, color_b):
+    def slide_n_update(self, y, color_w, color_b):
+        """ slide down all squares and update the macro. """
         y = y - 1
         while y >= 0:
             x = 1
@@ -34,12 +35,12 @@ class Block():
                 x += 1
             y -= 1
 
-    def remove(self, y, color):
+    def remove_n_clear(self, y, color):
         """ remove squares in a raw and set the macro False. """
         x = 1
         while x < 11:
-            self.square(x, y, color)  # black only, that's why
-            self._clear_macro(x, y)   # it can include this line.
+            self.square(x, y, color)  # black only
+            self._clear_macro(x, y)
             x += 1
 
     def is_removeable(self, y):

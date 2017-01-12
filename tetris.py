@@ -55,8 +55,8 @@ def main():
                 block.square(x, y, settings.white)
                 block.fill_macro(x, y)
                 if block.is_removeable(y):
-                    block.remove(y, settings.black)
-                    block.slide(y, settings.white, settings.black)
+                    block.remove_n_clear(y, settings.black)
+                    block.slide_n_update(y, settings.white, settings.black)
                 x = 5
                 y = 1
             else:
