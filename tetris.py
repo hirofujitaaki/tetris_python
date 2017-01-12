@@ -2,6 +2,7 @@ import sys
 import pygame
 from block import Block
 from settings import Settings
+import test_setup
 
 
 def main():
@@ -16,6 +17,7 @@ def main():
     x = 5
     y = 1
     t = 0
+    test_setup.slide(block, settings)
     while True:
         # draw walls.
         settings.draw_walls(block)
@@ -52,7 +54,8 @@ def main():
             if block.check_macro(x, y+1) is True:
                 block.fill_macro(x, y)
                 block.square(x, y, settings.white)
-                block.remove(y, settings.black)
+                if block.is_removeable(y):
+                    block.remove(y, settings.black)
                 x = 5
                 y = 1
             else:

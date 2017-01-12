@@ -22,14 +22,13 @@ class Block():
             return False
 
     def remove(self, y, color):
-        if self._is_removeable(y):
-            x = 1
-            while x < 11:
-                self.square(x, y, color)  # back to black.
-                self._clear_macro(x, y)
-                x += 1
+        x = 1
+        while x < 11:
+            self.square(x, y, color)  # back to black.
+            self._clear_macro(x, y)
+            x += 1
 
-    def _is_removeable(self, y):
+    def is_removeable(self, y):
         x = 1
         removeable = True
         while x < 11:
