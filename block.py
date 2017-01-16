@@ -53,3 +53,15 @@ class Block():
 
     def _clear_macro(self, x, y):
         self.macro[(x, y)] = False
+
+    def figure_sub_square(self, x, y, r):
+        self.x1 = x
+        self.y1 = y
+        if (r + 4) % 4 == 0:
+            self.x1 = x + 1
+        elif (r + 4) % 4 == 1:
+            self.y1 = y + 1
+        elif (r + 4) % 4 == 2:
+            self.x1 = x - 1
+        elif (r + 4) % 4 == 3:
+            self.y1 = y - 1
