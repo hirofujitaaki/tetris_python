@@ -20,6 +20,7 @@ def main():
     y = 1
     t = 0
     r = 0
+    typ = 0
     while True:
         x_move = 0
         r_move = 0
@@ -40,8 +41,9 @@ def main():
 
         x += x_move
         r += r_move
-        block.figure_sub_square(x, y, r)
-        if block.check_macro(x, y) or block.check_macro(block.x1, block.y1) is True:
+        block.figure_sub_squares(x, y, r, typ)
+        if block.check_macro(x, y) or block.check_macro(block.x1, block.y1) or \
+                block.check_macro(block.x2, block.y2) is True:
             if x_move != 0:
                 x -= x_move
             elif r_move != 0:
@@ -50,34 +52,43 @@ def main():
         t += 1
         if t % 10 == 0:  # adjust the speed of falling blocks.
             y += 1
-            block.figure_sub_square(x, y, r)
-            if block.check_macro(x, y) or block.check_macro(block.x1, block.y1) is True:
+            block.figure_sub_squares(x, y, r, typ)
+            if block.check_macro(x, y) or block.check_macro(block.x1, block.y1) or \
+                    block.check_macro(block.x2, block.y2) is True:
                 y = y - 1
-                block.figure_sub_square(x, y, r)
+                block.figure_sub_squares(x, y, r, typ)
                 block.square(x, y, settings.white)
                 block.square(block.x1, block.y1, settings.white)
+                block.square(block.x2, block.y2, settings.white)
                 block.fill_macro(x, y)
                 block.fill_macro(block.x1, block.y1)
+                block.fill_macro(block.x2, block.y2)
                 while block.is_removeable(y):
                     block.remove_n_clear(y, settings.black)
                     block.slide_n_update(y, settings.white, settings.black)
                 while block.is_removeable(block.y1):
                     block.remove_n_clear(block.y1, settings.black)
                     block.slide_n_update(block.y1, settings.white, settings.black)
+                while block.is_removeable(block.y2):
+                    block.remove_n_clear(block.y2, settings.black)
+                    block.slide_n_update(block.y2, settings.white, settings.black)
                 x = 5
                 y = 1
                 r = 0
+                typ = 1 - typ
 
         # draw the active block in red.
         block.square(x, y, settings.red)
-        block.figure_sub_square(x, y, r)
+        block.figure_sub_squares(x, y, r, typ)
         block.square(block.x1, block.y1, settings.red)
+        block.square(block.x2, block.y2, settings.red)
 
         pygame.display.update()
 
         # paint it back to black.
         block.square(x, y, settings.black)
         block.square(block.x1, block.y1, settings.black)
+        block.square(block.x2, block.y2, settings.black)
 
 
 if __name__ == '__main__':
