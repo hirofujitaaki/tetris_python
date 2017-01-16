@@ -47,26 +47,26 @@ def main():
             elif r_move != 0:
                 r -= r_move
 
-        # t += 1
-        # if t % 10 == 0:  # adjust the speed of falling blocks.
-        #     y += 1
-        #     block.figure_sub_square(x, y, r)
-        #     if block.check_macro(x, y) or block.check_macro(block.x1, block.y1) is True:
-        #         y = y - 1
-        #         block.figure_sub_square(x, y, r)
-        #         block.square(x, y, settings.white)
-        #         block.square(block.x1, block.y1, settings.white)
-        #         block.fill_macro(x, y)
-        #         block.fill_macro(block.x1, block.y1)
-        #         if block.is_removeable(y):
-        #             block.remove_n_clear(y, settings.black)
-        #             block.slide_n_update(y, settings.white, settings.black)
-        #         if block.is_removeable(block.y1):
-        #             block.remove_n_clear(block.y1, settings.black)
-        #             block.slide_n_update(block.y1, settings.white, settings.black)
-        #         x = 5
-        #         y = 1
-        #         r = 0
+        t += 1
+        if t % 10 == 0:  # adjust the speed of falling blocks.
+            y += 1
+            block.figure_sub_square(x, y, r)
+            if block.check_macro(x, y) or block.check_macro(block.x1, block.y1) is True:
+                y = y - 1
+                block.figure_sub_square(x, y, r)
+                block.square(x, y, settings.white)
+                block.square(block.x1, block.y1, settings.white)
+                block.fill_macro(x, y)
+                block.fill_macro(block.x1, block.y1)
+                while block.is_removeable(y):
+                    block.remove_n_clear(y, settings.black)
+                    block.slide_n_update(y, settings.white, settings.black)
+                while block.is_removeable(block.y1):
+                    block.remove_n_clear(block.y1, settings.black)
+                    block.slide_n_update(block.y1, settings.white, settings.black)
+                x = 5
+                y = 1
+                r = 0
 
         # draw the active block in red.
         block.square(x, y, settings.red)
