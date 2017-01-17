@@ -56,44 +56,37 @@ class Block():
 
     def figure_sub_squares(self, x, y, r, typ):
         if typ == 0:
-            if (r + 4) % 4 == 0:
-                self.x1 = x + 1
-                self.y1 = y
-                self.x2 = x - 1
-                self.y2 = y
-            elif (r + 4) % 4 == 1:
-                self.x1 = x
-                self.y1 = y + 1
-                self.x2 = x
-                self.y2 = y - 1
-            elif (r + 4) % 4 == 2:
-                self.x1 = x - 1
-                self.y1 = y
-                self.x2 = x + 1
-                self.y2 = y
-            elif (r + 4) % 4 == 3:
-                self.x1 = x
-                self.y1 = y - 1
-                self.x2 = x
-                self.y2 = y + 1
-        if typ == 1:
-            if (r + 4) % 4 == 0:
-                self.x1 = x + 1
-                self.y1 = y
-                self.x2 = x
-                self.y2 = y - 1
-            elif (r + 4) % 4 == 1:
-                self.x1 = x
-                self.y1 = y + 1
-                self.x2 = x + 1
-                self.y2 = y
-            elif (r + 4) % 4 == 2:
-                self.x1 = x - 1
-                self.y1 = y
-                self.x2 = x
-                self.y2 = y + 1
-            elif (r + 4) % 4 == 3:
-                self.x1 = x
-                self.y1 = y - 1
-                self.x2 = x - 1
-                self.y2 = y
+            base = {'x1': -1, 'y1': 0, 'x2': 1, 'y2': 0, 'x3': 2, 'y3': 0}
+            self._relative_positions(x, y, r, base)
+        elif typ == 1:
+            base = {'x1': -1, 'y1': -1, 'x2': -1, 'y2': 0, 'x3': 1, 'y3': 0}
+            self._relative_positions(x, y, r, base)
+        elif typ == 2:
+            base = {'x1': -1, 'y1': 0, 'x2': 0, 'y2': -1, 'x3': 1, 'y3': 0}
+            self._relative_positions(x, y, r, base)
+        elif typ == 3:
+            base = {'x1': -1, 'y1': 0, 'x2': 1, 'y2': -1, 'x3': 1, 'y3': 0}
+            self._relative_positions(x, y, r, base)
+        elif typ == 4:
+            base = {'x1': -1, 'y1': 0, 'x2': 0, 'y2': 1, 'x3': 1, 'y3': 1}
+            self._relative_positions(x, y, r, base)
+        elif typ == 5:
+            base = {'x1': 1, 'y1': 0, 'x2': 0, 'y2': 1, 'x3': 1, 'y3': 1}
+            self._relative_positions(x, y, r, base)
+        elif typ == 6:
+            base = {'x1': 1, 'y1': 0, 'x2': -1, 'y2': 1, 'x3': 0, 'y3': 1}
+            self._relative_positions(x, y, r, base)
+
+    def _relative_positions(self, x, y, r, base):
+        self.base = base
+        while (r + 4) % 4 > 0:
+            self.base['x1'], self.base['y1'] = self.base['y1'] * -1, self.base['x1']
+            self.base['x2'], self.base['y2'] = self.base['y2'] * -1, self.base['x2']
+            self.base['x3'], self.base['y3'] = self.base['y3'] * -1, self.base['x3']
+            r -= 1
+        self.base['x1'] += x
+        self.base['y1'] += y
+        self.base['x2'] += x
+        self.base['y2'] += y
+        self.base['x3'] += x
+        self.base['y3'] += y

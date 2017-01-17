@@ -2,6 +2,7 @@ import sys
 import pygame
 from block import Block
 from settings import Settings
+import random
 
 
 def main():
@@ -42,8 +43,10 @@ def main():
         x += x_move
         r += r_move
         block.figure_sub_squares(x, y, r, typ)
-        if block.check_macro(x, y) or block.check_macro(block.x1, block.y1) or \
-                block.check_macro(block.x2, block.y2) is True:
+        if block.check_macro(x, y) or \
+                block.check_macro(block.base['x1'], block.base['y1']) or \
+                block.check_macro(block.base['x2'], block.base['y2']) or \
+                block.check_macro(block.base['x3'], block.base['y3']) is True:
             if x_move != 0:
                 x -= x_move
             elif r_move != 0:
@@ -53,42 +56,51 @@ def main():
         if t % 10 == 0:  # adjust the speed of falling blocks.
             y += 1
             block.figure_sub_squares(x, y, r, typ)
-            if block.check_macro(x, y) or block.check_macro(block.x1, block.y1) or \
-                    block.check_macro(block.x2, block.y2) is True:
+            if block.check_macro(x, y) or \
+                    block.check_macro(block.base['x1'], block.base['y1']) or \
+                    block.check_macro(block.base['x2'], block.base['y2']) or \
+                    block.check_macro(block.base['x3'], block.base['y3']) is True:
                 y = y - 1
                 block.figure_sub_squares(x, y, r, typ)
                 block.square(x, y, settings.white)
-                block.square(block.x1, block.y1, settings.white)
-                block.square(block.x2, block.y2, settings.white)
+                block.square(block.base['x1'], block.base['y1'], settings.white)
+                block.square(block.base['x2'], block.base['y2'], settings.white)
+                block.square(block.base['x3'], block.base['y3'], settings.white)
                 block.fill_macro(x, y)
-                block.fill_macro(block.x1, block.y1)
-                block.fill_macro(block.x2, block.y2)
+                block.fill_macro(block.base['x1'], block.base['y1'])
+                block.fill_macro(block.base['x2'], block.base['y2'])
+                block.fill_macro(block.base['x3'], block.base['y3'])
                 while block.is_removeable(y):
                     block.remove_n_clear(y, settings.black)
                     block.slide_n_update(y, settings.white, settings.black)
-                while block.is_removeable(block.y1):
-                    block.remove_n_clear(block.y1, settings.black)
-                    block.slide_n_update(block.y1, settings.white, settings.black)
-                while block.is_removeable(block.y2):
-                    block.remove_n_clear(block.y2, settings.black)
-                    block.slide_n_update(block.y2, settings.white, settings.black)
+                while block.is_removeable(block.base['y1']):
+                    block.remove_n_clear(block.base['y1'], settings.black)
+                    block.slide_n_update(block.base['y1'], settings.white, settings.black)
+                while block.is_removeable(block.base['y2']):
+                    block.remove_n_clear(block.base['y2'], settings.black)
+                    block.slide_n_update(block.base['y2'], settings.white, settings.black)
+                while block.is_removeable(block.base['y3']):
+                    block.remove_n_clear(block.base['y3'], settings.black)
+                    block.slide_n_update(block.base['y3'], settings.white, settings.black)
                 x = 5
                 y = 1
                 r = 0
-                typ = 1 - typ
+                typ = random.randint(0, 7)
 
         # draw the active block in red.
         block.square(x, y, settings.red)
         block.figure_sub_squares(x, y, r, typ)
-        block.square(block.x1, block.y1, settings.red)
-        block.square(block.x2, block.y2, settings.red)
+        block.square(block.base['x1'], block.base['y1'], settings.red)
+        block.square(block.base['x2'], block.base['y2'], settings.red)
+        block.square(block.base['x3'], block.base['y3'], settings.red)
 
         pygame.display.update()
 
         # paint it back to black.
         block.square(x, y, settings.black)
-        block.square(block.x1, block.y1, settings.black)
-        block.square(block.x2, block.y2, settings.black)
+        block.square(block.base['x1'], block.base['y1'], settings.black)
+        block.square(block.base['x2'], block.base['y2'], settings.black)
+        block.square(block.base['x3'], block.base['y3'], settings.black)
 
 
 if __name__ == '__main__':
