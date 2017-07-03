@@ -8,11 +8,11 @@ class Block():
         self.macro = {}  # to check the collisions
 
     def square(self, x, y, color):
-        """used to paint back to black also. so fill_macro() can't be included."""
+        """draw a 12*12 square. take 2 pixels for margin."""
         x_starting_pixel = x * 14
         y_starting_pixel = y * 14
-        # a single square is by 12 * 12 pixels. mirgin is 2 pixels
         pygame.draw.rect(self.screen, color, (x_starting_pixel, y_starting_pixel, 12, 12))
+        # used to paint back to black also, so fill_macro() can't be included.
 
     def fill_macro(self, x, y):
         """set the macro True."""
