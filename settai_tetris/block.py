@@ -14,9 +14,21 @@ class Block():
         pygame.draw.rect(self.screen, color, (x_starting_pixel, y_starting_pixel, 12, 12))
         # used to paint back to black also, so fill_macro() can't be included.
 
+    def squares(self, x, y, color):
+        self.square(x, y, color)
+        self.square(self.base['x1'], self.base['y1'], color)
+        self.square(self.base['x2'], self.base['y2'], color)
+        self.square(self.base['x3'], self.base['y3'], color)
+
     def fill_macro(self, x, y):
         """set the macro True."""
         self.macro[(x, y)] = True
+
+    def fill_macros(self, x, y):
+        self.fill_macro(x, y)
+        self.fill_macro(self.base['x1'], self.base['y1'])
+        self.fill_macro(self.base['x2'], self.base['y2'])
+        self.fill_macro(self.base['x3'], self.base['y3'])
 
     def draw_walls(self, color):
         ver_block_num = 0
@@ -42,6 +54,12 @@ class Block():
             return self.macro[(x, y)]
         except KeyError:
             return False
+
+    def check_macros(self, x, y):
+        return self.check_macro(x, y) or \
+               self.check_macro(self.base['x1'], self.base['y1']) or \
+               self.check_macro(self.base['x2'], self.base['y2']) or \
+               self.check_macro(self.base['x3'], self.base['y3'])
 
     def is_removable(self, y):
         x = 1
