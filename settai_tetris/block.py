@@ -10,18 +10,18 @@ class Block():
         self.push_down = False  # drops the active block
         self.macro = {}  # to check the collisions
 
-    def square(self, x, y, color):
+    def draw_square(self, x, y, color):
         """draw a 12*12 square. take 2 pixels for margin."""
         x_starting_pixel = x * 14
         y_starting_pixel = y * 14
         pygame.draw.rect(self.screen, color, (x_starting_pixel, y_starting_pixel, 12, 12))
         # used to paint back to black also, so fill_macro() can't be included.
 
-    def squares(self, x, y, color):
-        self.square(x, y, color)
-        self.square(self.base['x1'], self.base['y1'], color)
-        self.square(self.base['x2'], self.base['y2'], color)
-        self.square(self.base['x3'], self.base['y3'], color)
+    def draw_squares(self, x, y, color):
+        self.draw_square(x, y, color)
+        self.draw_square(self.base['x1'], self.base['y1'], color)
+        self.draw_square(self.base['x2'], self.base['y2'], color)
+        self.draw_square(self.base['x3'], self.base['y3'], color)
 
     def fill_macro(self, x, y):
         """set the macro True."""
@@ -36,8 +36,8 @@ class Block():
     def draw_walls(self, color):
         ver_block_num = 0
         while ver_block_num < 20:
-            self.square(0, ver_block_num, color)  # left
-            self.square(11, ver_block_num, color)  # right
+            self.draw_square(0, ver_block_num, color)  # left
+            self.draw_square(11, ver_block_num, color)  # right
 
             self.fill_macro(0, ver_block_num)
             self.fill_macro(11, ver_block_num)
@@ -47,7 +47,7 @@ class Block():
     def draw_bottom(self, color):
         hori_block_num = 1
         while hori_block_num < 11:
-            self.square(hori_block_num, 19, color)
+            self.draw_square(hori_block_num, 19, color)
             self.fill_macro(hori_block_num, 19)
 
             hori_block_num = hori_block_num + 1
@@ -80,7 +80,7 @@ class Block():
         """ remove squares in a row and set the macro False. """
         x = 1
         while x < 11:
-            self.square(x, y, color)  # black only
+            self.draw_square(x, y, color)  # black only
             self._clear_macro(x, y)
             x += 1
 
@@ -91,9 +91,9 @@ class Block():
             x = 1
             while x <= 10:
                 if self.check_macro(x, y):
-                    self.square(x, y, color_b)
+                    self.draw_square(x, y, color_b)
                     self._clear_macro(x, y)
-                    self.square(x, y+1, color_w)
+                    self.draw_square(x, y+1, color_w)
                     self.fill_macro(x, y+1)
                 x += 1
             y -= 1

@@ -47,7 +47,7 @@ def main():
             if block.check_macros(x_pos, y_pos):
                 y_pos = y_pos - 1
                 block.figure_sub_squares(x_pos, y_pos, rotate, type_)
-                block.squares(x_pos, y_pos, settings.white)
+                block.draw_squares(x_pos, y_pos, settings.white)
                 block.fill_macros(x_pos, y_pos)
 
                 while block.is_removable(y_pos):
@@ -69,12 +69,12 @@ def main():
 
         # draw the active block in red.
         block.figure_sub_squares(x_pos, y_pos, rotate, type_)
-        block.squares(x_pos, y_pos, settings.red)
+        block.draw_squares(x_pos, y_pos, settings.red)
 
         pygame.display.update()
 
         # then paint it back to black.
-        block.squares(x_pos, y_pos, settings.black)
+        block.draw_squares(x_pos, y_pos, settings.black)
 
 
 if __name__ == '__main__':
