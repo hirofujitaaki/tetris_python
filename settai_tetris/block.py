@@ -5,6 +5,9 @@ class Block():
 
     def __init__(self, screen):
         self.screen = screen
+        self.x_move = 0
+        self.r_move = 0
+        self.push_down = False  # drops the active block
         self.macro = {}  # to check the collisions
 
     def square(self, x, y, color):
@@ -62,6 +65,7 @@ class Block():
                self.check_macro(self.base['x3'], self.base['y3'])
 
     def is_removable(self, y):
+        """return True if a row is removable."""
         x = 1
         removable = True
         while x < 11:

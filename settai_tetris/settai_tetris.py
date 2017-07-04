@@ -1,8 +1,8 @@
-import sys
 import pygame
+import random
 from block import Block
 from settings import Settings
-import random
+import game_functions as gf
 
 
 def main():
@@ -25,34 +25,22 @@ def main():
     type_ = random.randrange(0, 7)
 
     while True:
-        x_move = 0
-        r_move = 0
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                pygame.quit()
-                sys.exit()
+        block.x_move = 0
+        block.r_move = 0
 
-            elif event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_RIGHT:
-                    x_move = 1
+        gf.check_events(block)
+        x_pos += block.x_move
+        rotate += block.r_move
 
-                elif event.key == pygame.K_LEFT:
-                    x_move = -1
-
-                elif event.key == pygame.K_UP:
-                    r_move = 1
-
-        x_pos += x_move
-        rotate += r_move
         block.figure_sub_squares(x_pos, y_pos, rotate, type_)
         if block.check_macros(x_pos, y_pos):
-            if x_move != 0:
-                x_pos -= x_move
-            elif r_move != 0:
-                rotate -= r_move
+            if block.x_move != 0:
+                x_pos -= block.x_move
+            elif block.r_move != 0:
+                rotate -= block.r_move
 
-        timing += 1
-        if timing % 10 == 0:  # adjust the speed of falling blocks.
+        timing += 1  # adjust the speed of falling blocks.
+        if timing % 10 == 0 or block.push_down:
             y_pos += 1
             block.figure_sub_squares(x_pos, y_pos, rotate, type_)
 
