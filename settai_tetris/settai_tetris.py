@@ -2,6 +2,8 @@ import pygame
 import random
 from block import Block
 from settings import Settings
+from game_stats import GameStats
+from scoreboard import Scoreboard
 import game_functions as gf
 
 
@@ -14,6 +16,8 @@ def main():
     # instantiate the objects
     block = Block(screen)
     settings = Settings(screen)
+    stats = GameStats(settings)
+    sb = Scoreboard(screen, settings, stats)
     block.draw_walls(settings.white)
     block.draw_bottom(settings.white)
 
@@ -49,7 +53,7 @@ def main():
                 block.figure_sub_squares(x_pos, y_pos, rotate, type_)
                 block.draw_squares(x_pos, y_pos, settings.white)
                 block.fill_macros(x_pos, y_pos)
-                block.remove_n_slide(settings.white, settings.black)
+                block.remove_n_slide(settings, stats, sb)
 
                 # prepare for the next block
                 x_pos = 5
@@ -61,6 +65,7 @@ def main():
         block.figure_sub_squares(x_pos, y_pos, rotate, type_)
         block.draw_squares(x_pos, y_pos, settings.red)
 
+        sb.show_score()
         pygame.display.update()
 
         # then paint it back to black.

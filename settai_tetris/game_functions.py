@@ -25,3 +25,8 @@ def check_events(block):
         elif event.type == pygame.KEYUP:
             if event.key == pygame.K_DOWN:
                 block.push_down = False
+
+
+def add_score(stats, settings, sb):
+    stats.score += settings.point
+    sb.prep_score()

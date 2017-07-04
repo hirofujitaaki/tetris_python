@@ -1,4 +1,5 @@
 import pygame
+import game_functions as gf
 
 
 class Block():
@@ -68,12 +69,13 @@ class Block():
                self.check_macro(self.base['x2'], self.base['y2']) or \
                self.check_macro(self.base['x3'], self.base['y3'])
 
-    def remove_n_slide(self, color_w, color_b):
+    def remove_n_slide(self, settings, stats, sb):
         y = 0
         while y < 19:
             if self._is_removable(y):
-                self.remove_n_clear(y, color_b)
-                self.slide_n_update(y, color_w, color_b)
+                self.remove_n_clear(y, settings.black)
+                self.slide_n_update(y, settings.white, settings.black)
+                gf.add_score(stats, settings, sb)
             y += 1
 
     def _is_removable(self, y):
