@@ -29,4 +29,7 @@ def check_events(block):
 
 def add_score(stats, settings, sb):
     stats.score += settings.point
+    # bonus points. *5 points
+    if stats.score % 3 == 0 or stats.score % 4 == 0:
+        stats.score = stats.score * 5
     sb.prep_score()
