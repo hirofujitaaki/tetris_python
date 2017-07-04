@@ -51,6 +51,7 @@ def main():
                 block.fill_macros(x_pos, y_pos)
                 block.remove_n_slide(settings.white, settings.black)
 
+                # prepare for the next block
                 x_pos = 5
                 y_pos = 1
                 rotate = 0
