@@ -18,6 +18,7 @@ class Block():
         # used to paint back to black also, so fill_macro() can't be included.
 
     def draw_squares(self, x, y, color):
+        """Used for the active block."""
         self.draw_square(x, y, color)
         self.draw_square(self.base['x1'], self.base['y1'], color)
         self.draw_square(self.base['x2'], self.base['y2'], color)
@@ -28,6 +29,7 @@ class Block():
         self.macro[(x, y)] = True
 
     def fill_macros(self, x, y):
+        """Used for the active block."""
         self.fill_macro(x, y)
         self.fill_macro(self.base['x1'], self.base['y1'])
         self.fill_macro(self.base['x2'], self.base['y2'])
@@ -53,18 +55,28 @@ class Block():
             hori_block_num = hori_block_num + 1
 
     def check_macro(self, x, y):
+        """checks macro for a single square."""
         try:
             return self.macro[(x, y)]
         except KeyError:
             return False
 
     def check_macros(self, x, y):
+        """Used for the active block."""
         return self.check_macro(x, y) or \
                self.check_macro(self.base['x1'], self.base['y1']) or \
                self.check_macro(self.base['x2'], self.base['y2']) or \
                self.check_macro(self.base['x3'], self.base['y3'])
 
-    def is_removable(self, y):
+    def remove_n_slide(self, color_w, color_b):
+        y = 0
+        while y < 19:
+            if self._is_removable(y):
+                self.remove_n_clear(y, color_b)
+                self.slide_n_update(y, color_w, color_b)
+            y += 1
+
+    def _is_removable(self, y):
         """return True if a row is removable."""
         x = 1
         removable = True

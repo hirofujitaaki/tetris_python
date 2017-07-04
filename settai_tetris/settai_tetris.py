@@ -42,26 +42,15 @@ def main():
         timing += 1  # adjust the speed of falling blocks.
         if timing % 10 == 0 or block.push_down:
             y_pos += 1
-            block.figure_sub_squares(x_pos, y_pos, rotate, type_)
 
+            block.figure_sub_squares(x_pos, y_pos, rotate, type_)
             if block.check_macros(x_pos, y_pos):
                 y_pos = y_pos - 1
                 block.figure_sub_squares(x_pos, y_pos, rotate, type_)
                 block.draw_squares(x_pos, y_pos, settings.white)
                 block.fill_macros(x_pos, y_pos)
+                block.remove_n_slide(settings.white, settings.black)
 
-                while block.is_removable(y_pos):
-                    block.remove_n_clear(y_pos, settings.black)
-                    block.slide_n_update(y_pos, settings.white, settings.black)
-                while block.is_removable(block.base['y1']):
-                    block.remove_n_clear(block.base['y1'], settings.black)
-                    block.slide_n_update(block.base['y1'], settings.white, settings.black)
-                while block.is_removable(block.base['y2']):
-                    block.remove_n_clear(block.base['y2'], settings.black)
-                    block.slide_n_update(block.base['y2'], settings.white, settings.black)
-                while block.is_removable(block.base['y3']):
-                    block.remove_n_clear(block.base['y3'], settings.black)
-                    block.slide_n_update(block.base['y3'], settings.white, settings.black)
                 x_pos = 5
                 y_pos = 1
                 rotate = 0
