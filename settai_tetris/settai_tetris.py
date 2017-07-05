@@ -24,6 +24,9 @@ def main():
     # create the Sound objects
     move_sound = pygame.mixer.Sound("sounds/move.wav")
     rotate_sound = pygame.mixer.Sound("sounds/rotate.wav")
+    aeon_open = pygame.mixer.Sound("sounds/aeon_opening.wav")
+    aeon_close = pygame.mixer.Sound("sounds/aeon_closing.wav")
+
 
     # set the initial blocl and the position
     x_pos = 5
@@ -62,7 +65,7 @@ def main():
                 block.figure_sub_squares(x_pos, y_pos, rotate, type_)
                 block.draw_squares(x_pos, y_pos, settings.white)
                 block.fill_macros(x_pos, y_pos)
-                block.remove_n_slide(settings, stats, sb)
+                block.remove_n_slide(settings, stats, sb, aeon_open, aeon_close)
 
                 # prepare for the next block
                 x_pos = 5

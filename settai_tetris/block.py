@@ -69,13 +69,13 @@ class Block():
                self.check_macro(self.base['x2'], self.base['y2']) or \
                self.check_macro(self.base['x3'], self.base['y3'])
 
-    def remove_n_slide(self, settings, stats, sb):
+    def remove_n_slide(self, settings, stats, sb, aeon_open, aeon_close):
         y = 0
         while y < 19:
             if self._is_removable(y):
                 self.remove_n_clear(y, settings.black)
                 self.slide_n_update(y, settings.white, settings.black)
-                gf.add_score(stats, settings, sb)
+                gf.add_score(stats, settings, sb, aeon_open, aeon_close)
             y += 1
 
     def _is_removable(self, y):
