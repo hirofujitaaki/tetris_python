@@ -21,6 +21,10 @@ def main():
     block.draw_walls(settings.white)
     block.draw_bottom(settings.white)
 
+    # create the Sound objects
+    move_sound = pygame.mixer.Sound("sounds/move.wav")
+    rotate_sound = pygame.mixer.Sound("sounds/rotate.wav")
+
     # set the initial blocl and the position
     x_pos = 5
     y_pos = 1
@@ -42,6 +46,11 @@ def main():
                 x_pos -= block.x_move
             elif block.r_move != 0:
                 rotate -= block.r_move
+        else:
+            if block.x_move != 0:
+                move_sound.play()
+            elif block.r_move != 0:
+                rotate_sound.play()
 
         timing += 1  # adjust the speed of falling blocks.
         if timing % 10 == 0 or block.push_down:
