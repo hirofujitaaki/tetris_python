@@ -65,7 +65,7 @@ def main():
                 block.figure_sub_squares(x_pos, y_pos, rotate, type_)
                 block.draw_squares(x_pos, y_pos, settings.white)
                 block.fill_macros(x_pos, y_pos)
-                block.remove_n_slide(settings, stats, sb, aeon_open, aeon_close)
+                block.remove_n_slide(block, settings, stats, sb, aeon_open, aeon_close)
 
                 # prepare for the next block
                 x_pos = 5

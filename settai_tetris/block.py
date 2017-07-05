@@ -46,10 +46,21 @@ class Block():
                 ver_block_num += 1
             hori_block_num += 1
 
+        # negative space for inner
         hori_block_num = 1
         while hori_block_num < 11:
             ver_block_num = 0
-            while ver_block_num < 20:
+            while ver_block_num < 19:
+                self.draw_square(hori_block_num, ver_block_num, color_b)
+                self._clear_macro(hori_block_num, ver_block_num)
+                ver_block_num += 1
+            hori_block_num += 1
+
+        # negative space for score
+        hori_block_num = 12
+        while hori_block_num < 18:
+            ver_block_num = 1
+            while ver_block_num < 4:
                 self.draw_square(hori_block_num, ver_block_num, color_b)
                 self._clear_macro(hori_block_num, ver_block_num)
                 ver_block_num += 1
@@ -69,13 +80,13 @@ class Block():
                self.check_macro(self.base['x2'], self.base['y2']) or \
                self.check_macro(self.base['x3'], self.base['y3'])
 
-    def remove_n_slide(self, settings, stats, sb, aeon_open, aeon_close):
+    def remove_n_slide(self, block, settings, stats, sb, aeon_open, aeon_close):
         y = 0
         while y < 19:
             if self._is_removable(y):
                 self.remove_n_clear(y, settings.black)
                 self.slide_n_update(y, settings.white, settings.black)
-                gf.add_score(stats, settings, sb, aeon_open, aeon_close)
+                gf.add_score(block, stats, settings, sb, aeon_open, aeon_close)
             y += 1
 
     def _is_removable(self, y):
@@ -148,3 +159,20 @@ class Block():
         self.base['y2'] += y
         self.base['x3'] += x
         self.base['y3'] += y
+
+    def sidebar_visual(self, settings):
+        x = 12
+        y = 59
+        while y >= 4:
+            self.draw_square(x, y, settings.black)
+            pygame.display.update()
+            self.draw_square(x, y, settings.white)
+            y -= 1
+
+        x = 17
+        y = 4
+        while y <= 59:
+            self.draw_square(x, y, settings.black)
+            pygame.display.update()
+            self.draw_square(x, y, settings.white)
+            y += 1

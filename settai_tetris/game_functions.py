@@ -27,12 +27,13 @@ def check_events(block):
                 block.push_down = False
 
 
-def add_score(stats, settings, sb, aeon_open, aeon_close):
+def add_score(block, stats, settings, sb, aeon_open, aeon_close):
     stats.score += settings.point
     # bonus points. *5 points
     if (stats.score+1) % 3 == 0:
         aeon_open.play()
     if stats.score % 3 == 0:
+        block.sidebar_visual(settings)
         stats.score = stats.score * 5
         aeon_close.play()
     sb.prep_score()
