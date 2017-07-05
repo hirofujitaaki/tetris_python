@@ -18,15 +18,13 @@ def main():
     settings = Settings(screen)
     stats = GameStats(settings)
     sb = Scoreboard(screen, settings, stats)
-    block.draw_walls(settings.white)
-    block.draw_bottom(settings.white)
+    block.draw_outer(settings.white, settings.black)
 
     # create the Sound objects
     move_sound = pygame.mixer.Sound("sounds/move.wav")
     rotate_sound = pygame.mixer.Sound("sounds/rotate.wav")
     aeon_open = pygame.mixer.Sound("sounds/aeon_opening.wav")
     aeon_close = pygame.mixer.Sound("sounds/aeon_closing.wav")
-
 
     # set the initial blocl and the position
     x_pos = 5
@@ -44,11 +42,13 @@ def main():
         rotate += block.r_move
 
         block.figure_sub_squares(x_pos, y_pos, rotate, type_)
+        # if collisions, put the pos back to previous one
         if block.check_macros(x_pos, y_pos):
             if block.x_move != 0:
                 x_pos -= block.x_move
             elif block.r_move != 0:
                 rotate -= block.r_move
+        # otherwise ping a sound
         else:
             if block.x_move != 0:
                 move_sound.play()

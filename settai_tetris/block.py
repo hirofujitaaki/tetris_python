@@ -36,24 +36,24 @@ class Block():
         self.fill_macro(self.base['x2'], self.base['y2'])
         self.fill_macro(self.base['x3'], self.base['y3'])
 
-    def draw_walls(self, color):
-        ver_block_num = 0
-        while ver_block_num < 20:
-            self.draw_square(0, ver_block_num, color)  # left
-            self.draw_square(11, ver_block_num, color)  # right
+    def draw_outer(self, color_w, color_b):
+        hori_block_num = 0
+        while hori_block_num < 19:
+            ver_block_num = 0
+            while ver_block_num < 60:
+                self.draw_square(hori_block_num, ver_block_num, color_w)
+                self.fill_macro(hori_block_num, ver_block_num)
+                ver_block_num += 1
+            hori_block_num += 1
 
-            self.fill_macro(0, ver_block_num)
-            self.fill_macro(11, ver_block_num)
-
-            ver_block_num = ver_block_num + 1
-
-    def draw_bottom(self, color):
         hori_block_num = 1
         while hori_block_num < 11:
-            self.draw_square(hori_block_num, 19, color)
-            self.fill_macro(hori_block_num, 19)
-
-            hori_block_num = hori_block_num + 1
+            ver_block_num = 0
+            while ver_block_num < 20:
+                self.draw_square(hori_block_num, ver_block_num, color_b)
+                self._clear_macro(hori_block_num, ver_block_num)
+                ver_block_num += 1
+            hori_block_num += 1
 
     def check_macro(self, x, y):
         """checks macro for a single square."""
