@@ -16,9 +16,8 @@ def main():
     # instantiate the objects
     block = Block(screen)
     settings = Settings(screen)
-    stats = GameStats(settings)
+    stats = GameStats()
     sb = Scoreboard(screen, settings, stats)
-    block.draw_outer(settings.white, settings.black)
 
     # create the Sound objects
     move_sound = pygame.mixer.Sound("sounds/move.wav")
@@ -27,7 +26,8 @@ def main():
     aeon_close = pygame.mixer.Sound("sounds/aeon_closing.wav")
     bottom_down = pygame.mixer.Sound("sounds/bottom_down.wav")
 
-    # set the initial blocl and the position
+    # set the initial block and the position
+    block.draw_outer(settings.white, settings.black)
     x_pos = 5
     y_pos = 1
     timing = 0
@@ -76,11 +76,11 @@ def main():
 
         # adjusting the level
         if block.any_of_macro():
-            block.level += 1
-            if block.level == 2:
+            stats.level += 1
+            if stats.level == 2:
                 bottom_down.play()
                 block.bottom_down(settings)
-            elif block.level <= 3:
+            elif stats.level <= 3:
                 # polite way to gave over
                 import pdb; pdb.set_trace()
 

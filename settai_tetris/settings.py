@@ -3,7 +3,7 @@ class Settings():
 
     def __init__(self,  screen):
         self.screen = screen
-        self.white  = (255, 255, 255)
-        self.black  = (0, 0, 0)
-        self.red    = (255, 0, 0)
-        self.point = 1  # Scoring
+        self.white = (255, 255, 255)
+        self.black = (0, 0, 0)
+        self.red = (255, 0, 0)
+        self.point = 1  # add 1 point to stats.score per row

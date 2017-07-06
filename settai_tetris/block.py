@@ -1,5 +1,4 @@
 import pygame
-import game_functions as gf
 
 
 class Block():
@@ -10,7 +9,6 @@ class Block():
         self.r_move = 0
         self.push_down = False  # drops the active block
         self.macro = {}  # to check the collisions
-        self.level = 1  # at level 3, pdb.set_trace() occurs
 
     def draw_square(self, x, y, color):
         """draw a 12*12 square. take 2 pixels for margin."""
@@ -38,6 +36,7 @@ class Block():
         self.fill_macro(self.base['x3'], self.base['y3'])
 
     def draw_outer(self, color_w, color_b):
+        # fill the screen in white squares
         hori_block_num = 0
         while hori_block_num < 19:
             ver_block_num = 0
@@ -93,14 +92,14 @@ class Block():
 
     def remove_n_slide(self, settings, stats, sb, aeon_open, aeon_close):
         y = 0
-        if self.level == 1:
+        if stats.level == 1:
             while y < 19:
                 if self._is_removable(y):
                     self.remove_n_clear(y, settings.black)
                     self.slide_n_update(y, settings.white, settings.black)
                     self.add_score(stats, settings, sb, aeon_open, aeon_close)
                 y += 1
-        if self.level == 2:
+        if stats.level == 2:
             while y < 39:
                 if self._is_removable(y):
                     self.remove_n_clear(y, settings.black)
@@ -191,15 +190,16 @@ class Block():
     def add_score(self, stats, settings, sb, aeon_open, aeon_close):
         stats.score += settings.point
         # bonus points. *5 points
-        if (stats.score+1) % 4 == 0:
+        if (stats.score+1) % 20 == 0:
             aeon_open.play()
-        if stats.score % 4 == 0:
+        if stats.score % 20 == 0:
             self.sidebar_visual(settings)
             stats.score = stats.score * 5
             aeon_close.play()
         sb.prep_score()
 
     def sidebar_visual(self, settings):
+        # outward
         x = 12
         y = 59
         while y >= 4:
@@ -207,7 +207,7 @@ class Block():
             pygame.display.update()
             self.draw_square(x, y, settings.white)
             y -= 1
-
+        # inbound
         x = 17
         y = 4
         while y <= 59:
