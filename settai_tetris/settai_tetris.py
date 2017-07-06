@@ -25,6 +25,7 @@ def main():
     rotate_sound = pygame.mixer.Sound("sounds/rotate.wav")
     aeon_open = pygame.mixer.Sound("sounds/aeon_opening.wav")
     aeon_close = pygame.mixer.Sound("sounds/aeon_closing.wav")
+    bottom_down = pygame.mixer.Sound("sounds/bottom_down.wav")
 
     # set the initial blocl and the position
     x_pos = 5
@@ -65,13 +66,23 @@ def main():
                 block.figure_sub_squares(x_pos, y_pos, rotate, type_)
                 block.draw_squares(x_pos, y_pos, settings.white)
                 block.fill_macros(x_pos, y_pos)
-                block.remove_n_slide(block, settings, stats, sb, aeon_open, aeon_close)
+                block.remove_n_slide(settings, stats, sb, aeon_open, aeon_close)
 
                 # prepare for the next block
                 x_pos = 5
                 y_pos = 1
                 rotate = 0
                 type_ = random.randrange(0, 7)
+
+        # adjusting the level
+        if block.any_of_macro():
+            block.level += 1
+            if block.level == 2:
+                bottom_down.play()
+                block.bottom_down(settings)
+            elif block.level <= 3:
+                # polite way to gave over
+                import pdb; pdb.set_trace()
 
         # draw the active block in red.
         block.figure_sub_squares(x_pos, y_pos, rotate, type_)

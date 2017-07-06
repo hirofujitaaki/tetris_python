@@ -10,6 +10,7 @@ class Block():
         self.r_move = 0
         self.push_down = False  # drops the active block
         self.macro = {}  # to check the collisions
+        self.level = 1  # at level 3, pdb.set_trace() occurs
 
     def draw_square(self, x, y, color):
         """draw a 12*12 square. take 2 pixels for margin."""
@@ -73,6 +74,16 @@ class Block():
         except KeyError:
             return False
 
+    def any_of_macro(self):
+        """checks macro for bottom down."""
+        x = 1
+        y = 3
+        is_any = False
+        while x < 11:
+            is_any += self.check_macro(x, y)
+            x += 1
+        return is_any
+
     def check_macros(self, x, y):
         """Used for the active block."""
         return self.check_macro(x, y) or \
@@ -80,13 +91,30 @@ class Block():
                self.check_macro(self.base['x2'], self.base['y2']) or \
                self.check_macro(self.base['x3'], self.base['y3'])
 
-    def remove_n_slide(self, block, settings, stats, sb, aeon_open, aeon_close):
+    def remove_n_slide(self, settings, stats, sb, aeon_open, aeon_close):
         y = 0
-        while y < 19:
+        if self.level == 1:
+            while y < 19:
+                if self._is_removable(y):
+                    self.remove_n_clear(y, settings.black)
+                    self.slide_n_update(y, settings.white, settings.black)
+                    self.add_score(stats, settings, sb, aeon_open, aeon_close)
+                y += 1
+        if self.level == 2:
+            while y < 39:
+                if self._is_removable(y):
+                    self.remove_n_clear(y, settings.black)
+                    self.slide_n_update(y, settings.white, settings.black)
+                    self.add_score(stats, settings, sb, aeon_open, aeon_close)
+                y += 1
+
+    def bottom_down(self, settings):
+        y = 0
+        while y < 39:
             if self._is_removable(y):
                 self.remove_n_clear(y, settings.black)
+                pygame.display.update()
                 self.slide_n_update(y, settings.white, settings.black)
-                gf.add_score(block, stats, settings, sb, aeon_open, aeon_close)
             y += 1
 
     def _is_removable(self, y):
@@ -159,6 +187,17 @@ class Block():
         self.base['y2'] += y
         self.base['x3'] += x
         self.base['y3'] += y
+
+    def add_score(self, stats, settings, sb, aeon_open, aeon_close):
+        stats.score += settings.point
+        # bonus points. *5 points
+        if (stats.score+1) % 4 == 0:
+            aeon_open.play()
+        if stats.score % 4 == 0:
+            self.sidebar_visual(settings)
+            stats.score = stats.score * 5
+            aeon_close.play()
+        sb.prep_score()
 
     def sidebar_visual(self, settings):
         x = 12
